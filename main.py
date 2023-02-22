@@ -1,28 +1,17 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
+import time
 
-import re
+browser = webdriver.Chrome()
 
-#config
-options = Options()
-options.add_experimental_option("detach", True) #prevent closing
+browser.get('https://techstepacademy.com/training-ground')
 
-#helpers
-def printPage():
-    print(browser.title, browser.current_url)
-browser = webdriver.Chrome(options=options)
+input_element = browser.find_element(By.ID, "ipt2")
 
-#main
-browser.get("https://azurlane.koumakan.jp/wiki/Azur_Lane_Wiki")
+button_element = browser.find_element(By.XPATH, "//button[@id='b4']")
 
-targetParents = browser.find_elements(By.CLASS_NAME, "azl_news_title")
-for p in targetParents: 
-    if re.match(r".*ONGOING.*", p.text): 
-        # print(p.text.encode('utf-8'))
-        p.click()
-        browser.implicitly_wait(2)
+input_element.send_keys('test')
 
+button_element.click()
 
-browser.quit()
-
+time.sleep(5)
